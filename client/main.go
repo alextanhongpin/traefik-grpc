@@ -30,16 +30,16 @@ func main() {
 	credsClient := credentials.NewClientTLSFromCert(roots, "")
 
 	// Dial with specific transport
-	opts := []grpc.DialOption{grpc.WithTransportCredentials(credsClient)}
+	// opts := []grpc.DialOption{grpc.WithTransportCredentials(credsClient)}
 	// conn, err := grpc.Dial("127.0.0.1:4000", opts...)
-	conn, err := grpc.Dial("frontend.local:4443", opts...)
+	conn, err := grpc.Dial("frontend.local:4443", grpc.WithTransportCredentials(credsClient))
 	if err != nil {
 		log.Fatalf("fail to dial: %s", err.Error())
 	}
 	defer conn.Close()
 	client := pb.NewEchoServiceClient(conn)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	res, err := client.Echo(ctx, &pb.EchoRequest{

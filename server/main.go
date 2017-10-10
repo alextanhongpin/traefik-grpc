@@ -9,6 +9,7 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/reflection"
 
 	pb "github.com/alextanhongpin/traefik-grpc/proto"
 )
@@ -44,14 +45,16 @@ func main() {
 	//
 	// SERVER
 	//
-	lis, err := net.Listen("tcp", "127.0.0.1:50051")
+	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		log.Fatalf("failed to listen: %s", err.Error())
 	}
 
 	grpcServer := grpc.NewServer(serverOption)
 	defer grpcServer.Stop()
+
 	pb.RegisterEchoServiceServer(grpcServer, &echoServer{})
+	reflection.Register(grpcServer)
 	log.Println("listening to server at port *:50051. press ctrl + c to cancel.")
 	log.Fatal(grpcServer.Serve(lis))
 }
