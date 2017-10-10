@@ -33,7 +33,7 @@ Common Name (e.g. server FQDN or YOUR name) []: frontend.local
 
 At last, we configure our Træfik instance to use both self-signed certificates.
 
-```
+```toml
 defaultEntryPoints = ["https"]
 
 # For secure connection on backend.local
@@ -125,4 +125,12 @@ name := "World"
 r, err := client.SayHello(context.Background(), &pb.HelloRequest{Name: name})
 
 // ...
+```
+
+
+## Starting Traefik
+
+You need `sudo` permission in order to run `traefik`:
+```
+$ sudo ./traefik_darwin-amd64 --configFile=./traefik.toml
 ```
