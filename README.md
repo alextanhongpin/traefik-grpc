@@ -57,8 +57,8 @@ RootCAs = [ "./backend.cert" ]
 [backends]
   [backends.backend1]
     [backends.backend1.servers.server1]
-    # Access on backend with HTTPS
-    url = "https://backend.local:8080"
+    # Access on backend with HTTPS (the port is the gRPC server port)
+    url = "https://backend.local:50051"
 
 
 [frontends]
@@ -133,4 +133,32 @@ r, err := client.SayHello(context.Background(), &pb.HelloRequest{Name: name})
 You need `sudo` permission in order to run `traefik`:
 ```
 $ sudo ./traefik_darwin-amd64 --configFile=./traefik.toml
+```
+
+## Setting local hostname
+
+```bash
+$ cat /etc/hosts
+
+# Edit the host name
+$ sudo vi /etc/hosts
+
+# Clear the local DNS cache on macOS Sierra
+$ sudo killall -HUP mDNSResponder
+```
+
+Output:
+```bash
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost
+
+# Include this two lines to make it work
+127.0.0.1	backend.local frontend.local
 ```

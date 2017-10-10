@@ -1,6 +1,7 @@
 debug = true
 
 defaultEntryPoints = ["https"]
+InsecureSkipVerify = true
 
 # For secure connection on backend.local
 RootCAs = [ "./backend.cert" ]
@@ -9,14 +10,14 @@ RootCAs = [ "./backend.cert" ]
   [entryPoints.http]
   address = ":80"
     [entryPoints.http.redirect]
-       entryPoint = "https"
+    entryPoint = "https"
   [entryPoints.https]
   address = ":4443"
     [entryPoints.https.tls]
      # For secure connection on frontend.local
         [[entryPoints.https.tls.certificates]]
-        CertFile = "./frontend.cert"
-        KeyFile  = "./frontend.key"
+        certFile = "./frontend.cert"
+        keyFile  = "./frontend.key"
 
 
 [web]
@@ -28,13 +29,11 @@ RootCAs = [ "./backend.cert" ]
   [backends.backend1]
     [backends.backend1.servers.server1]
     # Access on backend with HTTPS
-    # url = "https://127.0.0.1:50051"
     url = "https://backend.local:50051"
 
 
 [frontends]
   [frontends.frontend1]
   backend = "backend1"
-  # passHostHeader = true
     [frontends.frontend1.routes.Echo]
-    rule = "Host: frontend.local"
+    rule = "Host:frontend.local"
