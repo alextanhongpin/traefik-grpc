@@ -162,3 +162,19 @@ Output:
 # Include this two lines to make it work
 127.0.0.1	backend.local frontend.local
 ```
+
+## Steps for test
+After all the above has been finished, then you can test by the steps below:
+
+```bash
+# Make sure that you are in the correct directory.
+```bath
+$ pwd 
+$GOPATH/src/github.com/alextanhongpin/traefik-grpc
+
+# Run the grpc server
+go run server/main.go
+
+# Run the grpc client in another terminal
+go run client/main.go
+```
