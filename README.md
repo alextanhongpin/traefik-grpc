@@ -168,8 +168,7 @@ After all the above has been finished, then you can test by the steps below:
 
 ```bash
 # Make sure that you are in the correct directory.
-```bath
-$ pwd 
+$ pwd
 $GOPATH/src/github.com/alextanhongpin/traefik-grpc
 
 # Run the grpc server
